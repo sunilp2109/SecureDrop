@@ -237,6 +237,26 @@ npm run dev:server
 
 ---
 
+## Deploying the frontend on Vercel
+
+Vercel can host the React UI. It cannot host the Express API (file uploads, SMTP, and Postgres need a long-running Node server).
+
+This repo includes `vercel.json` so the build output is `client/dist`, not `public`.
+
+In the Vercel project:
+
+1. **Framework Preset:** Other  
+2. **Root Directory:** `.` (repository root)  
+3. **Build Command:** `npm run build -w client`  
+4. **Output Directory:** `client/dist`  
+5. Add env `VITE_API_URL` = the public URL of your API (Render, Railway, Fly, etc.)
+
+If Output Directory is still set to `public` in Project Settings, change it to `client/dist` and Redeploy.
+
+The Express API should be deployed separately (`npm run build -w server` then `npm start`) with `APP_URL` set to the Vercel HTTPS origin.
+
+---
+
 ## Production notes
 
 1. Serve the app over **HTTPS**.  
